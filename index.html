@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .body {
+        overflow-x: scroll;
+        position: relative;
+    }
+
+    .content {
+        width: 140%;
+        height: 200px;
+        background: #555;
+    }
+
+    .box {
+        width: 30px;
+        height: 30px;
+        background-color: #777;
+        border-radius: 50%;
+        position: fixed;
+        top: 168px;
+        left: 1px;
+
+        cursor: pointer;
+        z-index: 32;
+    }
+</style>
+
+
+<body>
+    <div class="body" id="body">
+        <div id="content" class="content">
+            content
+        </div>
+        <div class="box" id="box"></div>
+    </div>
+</body>
+<script src="./index.js"></script>
+
+</html>
