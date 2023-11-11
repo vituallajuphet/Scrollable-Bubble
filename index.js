@@ -9,15 +9,14 @@ window.onload = () => {
 
     function init(elmnt, body) {
 
-
-        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
         if (document.getElementById(elmnt.id + "header")) {
           document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
         } else {
           elmnt.onmousedown = dragMouseDown;
         }
     
-        function dragMouseDown(e) {
+        const dragMouseDown = (e) => {
           body.removeEventListener('scroll', handleScroll)
           e = e || window.event;
           e.preventDefault();
@@ -26,7 +25,6 @@ window.onload = () => {
           document.onmouseup = closeDragElement;
           document.onmousemove = elementDrag;
         }
-
         
         body.onmousedown = (e) => {
           const { clientY } = e;
@@ -47,7 +45,6 @@ window.onload = () => {
 
         handleScroll()
 
-        
         const elementDrag = (e) => {
           e = e || window.event;
           e.preventDefault();
