@@ -5,8 +5,11 @@ window.onload = () => {
     const contentEl  =document.getElementById("body")
     const content  =document.getElementById("content")
 
-    dragElement(body);
-    function dragElement(elmnt) {
+    init(body, contentEl);
+
+    function init(elmnt, body) {
+
+
         var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
         if (document.getElementById(elmnt.id + "header")) {
           document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
@@ -15,6 +18,7 @@ window.onload = () => {
         }
     
         function dragMouseDown(e) {
+          body.removeEventListener('scroll', handleScroll)
           e = e || window.event;
           e.preventDefault();
           pos3 = e.clientX;
@@ -22,20 +26,39 @@ window.onload = () => {
           document.onmouseup = closeDragElement;
           document.onmousemove = elementDrag;
         }
-    
-        function elementDrag(e) {
+
+        
+        body.onmousedown = (e) => {
+          const { clientY } = e;
+          if(content.clientHeight < clientY) {
+            body.addEventListener('scroll', handleScroll)
+          }else{
+            body.removeEventListener('scroll', handleScroll)
+          }
+        }
+
+        const handleScroll = (e) => {
+          if(!e?.target) return
+          const screenwidth = window.innerWidth;
+          const { scrollWidth = 0, scrollLeft = 0 } = e.target
+          const percent = ( (scrollLeft / (scrollWidth - screenwidth) ) * 100) / 100
+          elmnt.style.left = (percent * screenwidth - 30) <= 0 ? 0 :  (percent * screenwidth) - 30 + "px";
+        }
+
+        handleScroll()
+
+        
+        const elementDrag = (e) => {
           e = e || window.event;
           e.preventDefault();
+          const width = window.innerWidth;
+          const scrollWidth = contentEl.scrollWidth - width 
+          let offset = elmnt.offsetLeft < 0 ? 0 : 
+          elmnt.offsetLeft >=  window.innerWidth - 30  ? window.innerWidth - 30 - 1 :
+          elmnt.offsetLeft
 
-          
-        const width = window.innerWidth;
-        const scrollWidth = contentEl.scrollWidth - width 
-        let offset = elmnt.offsetLeft < 0 ? 0 : 
-        elmnt.offsetLeft >=  window.innerWidth - 30  ? window.innerWidth - 30 - 1 :
-        elmnt.offsetLeft
-
-        const boxpercent = (offset /  width) * 100
-        const offsetWidth  =  ((boxpercent  /  100) * scrollWidth)
+          const boxpercent = (offset /  width) * 100
+          const offsetWidth  =  ((boxpercent  /  100) * scrollWidth)
 
             if(offset >= 0) {
                 pos1 = pos3 - e.clientX;
