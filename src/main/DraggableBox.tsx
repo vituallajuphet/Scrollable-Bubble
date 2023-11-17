@@ -33,11 +33,6 @@ export const DraggableBox = (props: any) => {
     }
   }, [pressed])
   
-  const styleValue = useMemo(() => {
-    if(value) {}
-      return value ? {transform: `translate(${value}px` } : {}
-  }, [value])
-
   return (
     <>
         <div ref ={ref} style={{...style.boxstyle,}} />
